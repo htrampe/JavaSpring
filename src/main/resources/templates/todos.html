@@ -1,0 +1,14 @@
+<h2 th:text="'Deine ToDos (' + ${#arrays.length(todos)} + ')'"></h2>
+<hr>
+<span th:each="todo, todoStat: ${todos}">
+    <a class="btn btn-secondary mt-2" th:text="${todo}" th:href="@{/deltodo(id=${todoStat.index})}"></a>
+</span>
+<hr>
+<form th:action="@{/addtodo}">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Neue ToDo" th:name="todoDesc">
+        <div class="input-group-append">
+            <button class="btn btn-secondary" type="submit" id="button-addon2">Speichern</button>
+        </div>
+    </div>
+</form>

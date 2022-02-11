@@ -1,0 +1,39 @@
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">ToDo Spring</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            
+            
+            <li th:if="${activePage == 'home'}" class="nav-item active">
+                <a class="nav-link" th:href="@{/?activePage=home}">Home</a>
+            </li>
+            <li th:unless="${activePage == 'home'}" class="nav-item">
+                <a class="nav-link" th:href="@{/?activePage=home}">Home</a>
+            </li>
+
+
+            <li th:if="${activePage == 'todos'}" class="nav-item active">
+                <a class="nav-link" th:href="@{/todos}">ToDos</a>
+            </li>
+            <li th:unless="${activePage == 'todos'}" class="nav-item">
+                <a class="nav-link" th:href="@{/todos}">ToDos</a>
+            </li>
+
+
+
+            <li th:if="${activePage == 'impressum'}" class="nav-item active">
+                <a class="nav-link" th:href="@{/?activePage=impressum}">Impressum</a>
+            </li>
+            <li th:unless="${activePage == 'impressum'}" class="nav-item">
+                <a class="nav-link" th:href="@{/?activePage=impressum}">Impressum</a>
+            </li>
+
+
+        </ul>
+        </div>
+    </nav>
+</div>
