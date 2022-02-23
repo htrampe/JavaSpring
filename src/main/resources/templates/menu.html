@@ -22,15 +22,32 @@
             <li th:unless="${activePage == 'todos'}" class="nav-item">
                 <a class="nav-link" th:href="@{/todos}">ToDos</a>
             </li>
+            <!--
+            <li th:if="${activePage == 'forexample'}" class="nav-item active">
+                <a class="nav-link" th:href="@{/forexample}">For-Example</a>
+            </li>
+            <li th:unless="${activePage == 'forexample'}" class="nav-item">
+                <a class="nav-link" th:href="@{/forexample}">For-Example</a>
+            </li>
+            -->
 
-
+            <li th:if="${activePage == 'cards'}" class="nav-item active">
+                <a class="nav-link" th:href="@{/cards}">Karten</a>
+            </li>
+            <li th:unless="${activePage == 'cards'}" class="nav-item">
+                <a class="nav-link" th:href="@{/cards}">Karten</a>
+            </li>
 
             <li th:if="${activePage == 'impressum'}" class="nav-item active">
-                <a class="nav-link" th:href="@{/?activePage=impressum}">Impressum</a>
+                <a class="nav-link" th:href="@{/?activePage=impressum}">
+                    Impressum
+                </a>
             </li>
             <li th:unless="${activePage == 'impressum'}" class="nav-item">
                 <a class="nav-link" th:href="@{/?activePage=impressum}">Impressum</a>
             </li>
+
+            
 
 
         </ul>

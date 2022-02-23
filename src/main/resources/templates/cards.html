@@ -1,0 +1,8 @@
+<h1>Karten</h1>
+<hr>
+<div th:each="card: ${cards}" class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title" th:text="${card[0]}"></h5>
+        <p class="card-text" th:text="${card[1]}"></p>
+    </div>
+</div>
