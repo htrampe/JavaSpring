@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class TodosController {
@@ -39,9 +40,18 @@ public class TodosController {
 
     @RequestMapping("/changetodo")
     public String changetodo(@RequestParam(name="id", required = true, defaultValue = "null") int id, @RequestParam(name="activePage", required = false, defaultValue = "changetodo") String activePage, Model model){
-        //model.addAttribute("todos", getTodos());
-        model.addAttribute("activePage", "changetodo");
+        
+        // Todo zur Bearbeitung laden
+        model.addAttribute("todo", getTodos().get(id));
+        model.addAttribute("todoid", id);
+        model.addAttribute("activePage", "todoUpdate");
         return "index.html";
+    }
+
+    @RequestMapping("/updatetodo")
+    public String updatetodo(@RequestParam(name="todoId", required = true, defaultValue = "null") String todoId, @RequestParam(name="todoDesc", required = true, defaultValue = "null") String todoDesc, @RequestParam(name="activePage", required = false, defaultValue = "todos") String activePage, Model model){
+        getTodos().set(Integer.parseInt(todoId), todoDesc);
+        return "redirect:/todos";
     }
 
     @RequestMapping("/addtodo")
