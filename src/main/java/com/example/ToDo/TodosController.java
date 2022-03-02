@@ -37,6 +37,13 @@ public class TodosController {
         return "index.html";
     }
 
+    @RequestMapping("/changetodo")
+    public String changetodo(@RequestParam(name="id", required = true, defaultValue = "null") int id, @RequestParam(name="activePage", required = false, defaultValue = "changetodo") String activePage, Model model){
+        //model.addAttribute("todos", getTodos());
+        model.addAttribute("activePage", "changetodo");
+        return "index.html";
+    }
+
     @RequestMapping("/addtodo")
     public String addtodo(@RequestParam(name="todoDesc", required = true, defaultValue = "null") String todoDesc, @RequestParam(name="activePage", required = false, defaultValue = "todos") String activePage, Model model){
         
