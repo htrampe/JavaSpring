@@ -5,13 +5,15 @@
         <tr>
             <td>#</td>
             <td>Beschreibung</td>
+            <td>Person</td>
             <td>&nbsp;</td>
         </tr>
     </thead>
     <tbody>
         <tr th:each="todo, todoStat: ${todos}">
             <td th:text="${todoStat.count}"></td>
-            <td th:text="${todo}"></td>
+            <td th:text="${todo.getDesc()}"></td>
+            <td th:text="${todo.getPerson()}"></td>
             <td>
                 <a class="btn btn-sm btn-danger" th:href="@{/deltodo(id=${todoStat.index})}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
