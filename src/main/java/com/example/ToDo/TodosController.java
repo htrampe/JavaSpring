@@ -27,10 +27,30 @@ public class TodosController {
         getTodos().add(new Todo("Küche aufräumen", "Jordan"));
     }
 
+    // Personen erstellen und zurückgeben
+    private ArrayList<String> getPersonen(){
+        ArrayList<String> personen = new ArrayList<>();
+
+        personen.add("Amelie");
+        personen.add("Alex");
+        personen.add("Theo");
+        personen.add("Bent");
+        personen.add("Jordan");
+        personen.add("Lennard");
+        personen.add("Nils");
+        personen.add("Holger");
+
+        return personen;
+    }
+
     @GetMapping("/todos")
     public String todos(@RequestParam(name="activePage", required = false, defaultValue = "todos") String activePage, Model model){
         model.addAttribute("activePage", "todos");
         model.addAttribute("todos", getTodos());
+
+        // Personen für eine ToDo holen
+        model.addAttribute("personen", getPersonen());
+
         return "index.html";
     }
 
@@ -45,6 +65,10 @@ public class TodosController {
         // Todo zur Bearbeitung laden
         model.addAttribute("todo", getTodos().get(id));
         model.addAttribute("todoid", id);
+
+        // Mögliche Personen hier hinzufügen
+        model.addAttribute("personen", getPersonen());
+        
         model.addAttribute("activePage", "todoUpdate");
         return "index.html";
     }
