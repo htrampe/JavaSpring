@@ -1,6 +1,6 @@
 <h2>Todo bearbeiten</h2>
 <hr>
-<form th:action="@{/updatetodo(id=${todoid})}">
+<form th:action="@{/updatetodo(id=${todo.getId()})}">
     <div class="input-group mb-3">
         <input type="text" class="form-control" th:value="${todo.getDesc()}" th:name="todoDesc" >
         <select class="custom-select" id="inputGroupSelect01" th:name="todoPerson">

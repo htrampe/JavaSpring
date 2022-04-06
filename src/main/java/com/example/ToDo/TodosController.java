@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 @Controller
 public class TodosController {
     
@@ -19,12 +18,20 @@ public class TodosController {
     public TodosController(){
         setTodos(new ArrayList<Todo>());
 
-        createDemoData();
+        //createDemoData();
+        loadToDosFromDB();
     }
 
     private void createDemoData(){
-        getTodos().add(new Todo("Müll rausbringen!", "Amelie"));
-        getTodos().add(new Todo("Küche aufräumen", "Jordan"));
+        getTodos().add(new Todo(0, "Müll rausbringen!", "Amelie"));
+        getTodos().add(new Todo(1, "Küche aufräumen", "Jordan"));
+    }
+
+    // Lädt aktuelle ToDos aus der Datenbank und wirft bei Bedarf eine SQL-Exception
+    private void loadToDosFromDB(){
+        DBController db = new DBController();
+        setTodos(db.getAllToDos());
+        
     }
 
     // Personen erstellen und zurückgeben
@@ -39,31 +46,34 @@ public class TodosController {
         personen.add("Lennard");
         personen.add("Nils");
         personen.add("Holger");
+        personen.add("Oskar");
 
         return personen;
     }
 
     @GetMapping("/todos")
     public String todos(@RequestParam(name="activePage", required = false, defaultValue = "todos") String activePage, Model model){
+        loadToDosFromDB();
         model.addAttribute("activePage", "todos");
         model.addAttribute("todos", getTodos());
 
         // Personen für eine ToDo holen
         model.addAttribute("personen", getPersonen());
-
         return "index.html";
     }
 
     @RequestMapping("/deltodo")
     public String deltodo(@RequestParam(name="id", required = true, defaultValue = "null") int id, @RequestParam(name="activePage", required = false, defaultValue = "todos") String activePage, Model model){
-        getTodos().remove(id);
+        DBController db = new DBController();
+        db.delToDo(id);
         return "redirect:/todos";
     }
 
     @RequestMapping("/changetodo")
     public String changetodo(@RequestParam(name="id", required = true, defaultValue = "null") int id, @RequestParam(name="activePage", required = false, defaultValue = "changetodo") String activePage, Model model){
         // Todo zur Bearbeitung laden
-        model.addAttribute("todo", getTodos().get(id));
+        DBController db = new DBController();
+        model.addAttribute("todo", db.getToDo(id));
         model.addAttribute("todoid", id);
 
         // Mögliche Personen hier hinzufügen
@@ -75,14 +85,15 @@ public class TodosController {
     
     @RequestMapping("/updatetodo")
     public String updatetodo(@RequestParam(name="todoId", required = true, defaultValue = "null") int todoId, @RequestParam(name="todoDesc", required = true, defaultValue = "null") String todoDesc,@RequestParam(name="todoPerson", required = true, defaultValue = "null") String todoPerson, @RequestParam(name="activePage", required = false, defaultValue = "todos") String activePage, Model model){
-        getTodos().get(todoId).setDesc(todoDesc);
-        getTodos().get(todoId).setPerson(todoPerson);
+        DBController db = new DBController();
+        db.updateToDo(todoId, todoPerson, todoDesc);
         return "redirect:/todos";
     }
     
     @RequestMapping("/addtodo")
     public String addtodo(@RequestParam(name="todoDesc", required = true, defaultValue = "null") String todoDesc,@RequestParam(name="todoPerson", required = true, defaultValue = "null") String todoPerson, @RequestParam(name="activePage", required = false, defaultValue = "todos") String activePage, Model model){
-        getTodos().add(new Todo(todoDesc, todoPerson));
+        DBController db = new DBController();
+        db.addNewToDo(todoPerson, todoDesc);
         return "redirect:/todos";
     }
     
