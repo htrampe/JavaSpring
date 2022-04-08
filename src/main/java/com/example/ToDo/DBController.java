@@ -1,10 +1,11 @@
 package com.example.ToDo;
 import com.example.ToDo.models.Todo;
+import java.util.ArrayList;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.sql.ResultSet;
 
 public class DBController {
@@ -12,8 +13,10 @@ public class DBController {
     String connectionUrl;
     String username;
     String passwort;
-   
+    
     public DBController(){
+        // ACHTUNG! Hier den Port entsprechend XAMPP austauschen, z.B. jdbc:mysql://localhost:3306/javadb
+        // javadb ist der Name der Datenbank, kann auch bei euch anders sein!
         setConnectionUrl("jdbc:mysql://localhost:8889/javadb");
         setPasswort("root");
         setUsername("root");
@@ -26,12 +29,12 @@ public class DBController {
         ArrayList<Todo> todos = new ArrayList<>();
 
         // Das ist DB-Query
-        String sqlSelectAllPersons = "SELECT * FROM todos";
+        String sqlSelectAllToDos = "SELECT * FROM todos";
 
         // Verbindung aufbauen mit USERNAME root und PASSWORT root
         try{
             Connection conn = DriverManager.getConnection(getConnectionUrl(), getUsername(), getPasswort()); 
-            PreparedStatement ps = conn.prepareStatement(sqlSelectAllPersons); 
+            PreparedStatement ps = conn.prepareStatement(sqlSelectAllToDos); 
             ResultSet rs = ps.executeQuery();
             // Solange es Datensätze in der von der DB angefragen Ressource gibt, werden diese durchgearbeitet und dann als eine ArrayList zurückgegeben
             while (rs.next()) {

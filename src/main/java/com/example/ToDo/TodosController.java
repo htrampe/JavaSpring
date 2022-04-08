@@ -31,7 +31,6 @@ public class TodosController {
     private void loadToDosFromDB(){
         DBController db = new DBController();
         setTodos(db.getAllToDos());
-        
     }
 
     // Personen erstellen und zurückgeben
