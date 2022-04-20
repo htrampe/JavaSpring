@@ -3,11 +3,11 @@
 <form th:action="@{/updatetodo(id=${todo.getId()})}">
     <div class="input-group mb-3">
         <input type="text" class="form-control" th:value="${todo.getDesc()}" th:name="todoDesc" >
-        <select class="custom-select" id="inputGroupSelect01" th:name="todoPerson">
+        <select class="custom-select" id="inputGroupSelect01" th:name="todoPersonId">
             <!-- Dynamisierte DropDown-Liste mit Option-Select -->
             <span th:each="person: ${personen}">
-                <option th:if="${todo.getPerson() == person}" th:value="${person}" th:text="${person}" selected="selected"></option>
-                <option th:unless="${todo.getPerson() == person}" th:value="${person}" th:text="${person}"></option>
+                <option th:if="${todo.getPersonId() == person.getId()}" th:value="${person.getId()}" th:text="${person.getName()}" selected="selected"></option>
+                <option th:unless="${todo.getPersonId() == person.getId()}" th:value="${person.getId()}" th:text="${person.getName()}"></option>
             </span>
         </select>
         <input type="number" class="form-control" th:value="${todoid}" th:name="todoId" style="display: none;" >

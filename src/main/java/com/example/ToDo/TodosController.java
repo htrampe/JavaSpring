@@ -2,6 +2,7 @@ package com.example.ToDo;
 
 import java.util.ArrayList;
 
+import com.example.ToDo.models.Person;
 import com.example.ToDo.models.Todo;
 
 import org.springframework.stereotype.Controller;
@@ -23,8 +24,8 @@ public class TodosController {
     }
 
     private void createDemoData(){
-        getTodos().add(new Todo(0, "Müll rausbringen!", "Amelie"));
-        getTodos().add(new Todo(1, "Küche aufräumen", "Jordan"));
+        //getTodos().add(new Todo(0, "Müll rausbringen!", "Amelie"));
+        //getTodos().add(new Todo(1, "Küche aufräumen", "Jordan"));
     }
 
     // Lädt aktuelle ToDos aus der Datenbank und wirft bei Bedarf eine SQL-Exception
@@ -34,7 +35,7 @@ public class TodosController {
     }
 
     // Personen erstellen und zurückgeben
-    private ArrayList<String> getPersonen(){
+    private ArrayList<String> getPersonenNoDB(){
         ArrayList<String> personen = new ArrayList<>();
 
         personen.add("Amelie");
@@ -46,6 +47,17 @@ public class TodosController {
         personen.add("Nils");
         personen.add("Holger");
         personen.add("Oskar");
+
+        return personen;
+    }
+
+
+    // Holt alle Personen aus der Datenbank!
+    private ArrayList<Person> getPersonen(){
+        ArrayList<Person> personen = new ArrayList<>();
+
+        DBController db = new DBController();
+        personen = db.getAllPersonen();
 
         return personen;
     }
@@ -83,16 +95,16 @@ public class TodosController {
     }
     
     @RequestMapping("/updatetodo")
-    public String updatetodo(@RequestParam(name="todoId", required = true, defaultValue = "null") int todoId, @RequestParam(name="todoDesc", required = true, defaultValue = "null") String todoDesc,@RequestParam(name="todoPerson", required = true, defaultValue = "null") String todoPerson, @RequestParam(name="activePage", required = false, defaultValue = "todos") String activePage, Model model){
+    public String updatetodo(@RequestParam(name="todoId", required = true, defaultValue = "null") int todoId, @RequestParam(name="todoDesc", required = true, defaultValue = "null") String todoDesc, @RequestParam(name="todoPersonId", required = true, defaultValue = "null") int todoPersonId, @RequestParam(name="activePage", required = false, defaultValue = "todos") String activePage, Model model){
         DBController db = new DBController();
-        db.updateToDo(todoId, todoPerson, todoDesc);
+        db.updateToDo(todoId, todoDesc, todoPersonId);
         return "redirect:/todos";
     }
     
     @RequestMapping("/addtodo")
-    public String addtodo(@RequestParam(name="todoDesc", required = true, defaultValue = "null") String todoDesc,@RequestParam(name="todoPerson", required = true, defaultValue = "null") String todoPerson, @RequestParam(name="activePage", required = false, defaultValue = "todos") String activePage, Model model){
+    public String addtodo(@RequestParam(name="todoDesc", required = true, defaultValue = "null") String todoDesc,@RequestParam(name="todoPerson", required = true, defaultValue = "null") int todoPersonId, @RequestParam(name="activePage", required = false, defaultValue = "todos") String activePage, Model model){
         DBController db = new DBController();
-        db.addNewToDo(todoPerson, todoDesc);
+        db.addNewToDo(todoPersonId, todoDesc);
         return "redirect:/todos";
     }
     

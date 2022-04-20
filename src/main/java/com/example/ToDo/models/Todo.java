@@ -5,12 +5,24 @@ public class Todo {
     String desc;
     String person;
     int id;
-    
-    public Todo(int id, String desc, String person){
+    int personId;
+
+    public Todo(int id, String desc, String person, int personId){
         setDesc(desc);
         setPerson(person);
         setId(id);
+        setPersonId(personId);
     }
+
+    public void setPersonId(int personId) {
+        this.personId = personId;
+    }
+
+    public int getPersonId() {
+        return personId;
+    }
+
+
 
     public int getId() {
         return id;
